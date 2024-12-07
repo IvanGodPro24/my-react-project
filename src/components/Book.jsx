@@ -1,8 +1,8 @@
 const BookList = ({ books }) => {
   return (
     <ul>
-      {books.map((book) => {
-        return <li>{book.name}</li>;
+      {books.map(({id, name}) => {
+        return <li key={id}>{name}</li>;
       })}
     </ul>
   );

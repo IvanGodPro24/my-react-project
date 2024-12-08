@@ -5,6 +5,7 @@ import "./App.css";
 import Hello from "./Hello";
 import Product from "./Product";
 import BookList from "./Book";
+import UserMenu from "./UserMenu";
 
 const favouriteBooks = [
   { id: "id-1", name: "JS for beginners" },
@@ -50,6 +51,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <UserMenu name='John'></UserMenu>
     </>
   );
 }

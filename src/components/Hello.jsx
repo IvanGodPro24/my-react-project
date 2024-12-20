@@ -1,7 +1,11 @@
 const Hello = () => {
+  const printHello = () => {
+    console.log('Hello');
+  }
+
   return (
     <div>
-      <h1>Hello</h1>
+      <h1 onClick={printHello}>Hello</h1>
     </div>
   );
 };

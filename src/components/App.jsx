@@ -10,6 +10,7 @@ import CustomButton from "./CustomButton";
 import CountButton from "./CountButton";
 import HideButton from "./HideButton";
 import ClickCounter from "./ClickCounter";
+import LoginForm from "./LoginForm";
 
 const favouriteBooks = [
   { id: "id-1", name: "JS for beginners" },
@@ -27,7 +28,7 @@ function App() {
 
     return 0;
   });
-  
+
   const [clicks, setClicks] = useState(0);
 
   // useEffect(() => [(document.title = `You clicked ${clicks} times`)]);
@@ -69,6 +70,32 @@ function App() {
 
   const handleClick = () => {
     setClicks(clicks + 1);
+  };
+
+  // const handleSubmit = (evt) => {
+  //   evt.preventDefault();
+  //   console.log(evt);
+  // };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    const form = evt.target;
+    const { login, password } = form.elements;
+    console.log(form.elements);
+
+    // Посилання на DOM-елементи
+    console.log(login, password);
+
+    // Значення полів
+    console.log(login.value, password.value);
+
+    // Скидаємо значення полів після відправки
+    form.reset();
+  };
+
+  const handleLogin = (userData) => {
+    console.log(userData);
   };
 
   return (
@@ -120,6 +147,14 @@ function App() {
 
       <button onClick={() => setFirst(first + 1)}>First: {first}</button>
       <button onClick={() => setSecond(second + 1)}>Second: {second}</button>
+
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="login" />
+        <input type="password" name="password" />
+        <button type="submit">Login</button>
+      </form>
+
+      <LoginForm onLogin={handleLogin}></LoginForm>
     </>
   );
 }

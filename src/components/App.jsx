@@ -11,6 +11,7 @@ import CountButton from "./CountButton";
 import HideButton from "./HideButton";
 import ClickCounter from "./ClickCounter";
 import LoginForm from "./LoginForm";
+import FeedbackForm from "./FeedbackForm";
 
 const favouriteBooks = [
   { id: "id-1", name: "JS for beginners" },
@@ -155,6 +156,8 @@ function App() {
       </form>
 
       <LoginForm onLogin={handleLogin}></LoginForm>
+
+      <FeedbackForm></FeedbackForm>
     </>
   );
 }

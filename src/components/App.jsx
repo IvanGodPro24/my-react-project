@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { fetchArticlesWithTopic } from "./articles-api";
 import reactLogo from "../assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -12,6 +13,10 @@ import HideButton from "./HideButton";
 import ClickCounter from "./ClickCounter";
 import LoginForm from "./LoginForm";
 import FeedbackForm from "./FeedbackForm";
+import Articles from "./Articles";
+import SearchForm from "./SearchForm";
+import Error from "./Error";
+import Loader from "./Loader";
 
 const favouriteBooks = [
   { id: "id-1", name: "JS for beginners" },
@@ -32,7 +37,6 @@ function App() {
 
   const [clicks, setClicks] = useState(0);
 
-  // useEffect(() => [(document.title = `You clicked ${clicks} times`)]);
   // useEffect(() => console.log('hello'), [])
 
   // useEffect(() => {
@@ -44,6 +48,10 @@ function App() {
   //     clearInterval(intervalId);
   //   };
   // }, []);
+
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     console.log("Clicks updated: ", clicks);
@@ -68,6 +76,32 @@ function App() {
     console.log(`Count: ${count}`);
     localStorage.setItem("saved-count", count);
   }, [count]);
+
+  // useEffect(() => {
+  //   async function fetchArticles() {
+  //     try {
+  //       setLoading(true);
+
+  //       const data = await fetchArticlesWithTopic("react");
+
+  //       setArticles(data);
+  //       // const response = await axios.get(
+  //       //   "https://hn.algolia.com/api/v1/search?query=react"
+  //       // );
+
+  //       // console.log(response);
+
+  //       // setArticles(response.data.hits);
+  //     } catch (error) {
+  //       console.error(error);
+  //       setError(true);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+
+  //   fetchArticles();
+  // }, []);
 
   const handleClick = () => {
     setClicks(clicks + 1);
@@ -97,6 +131,23 @@ function App() {
 
   const handleLogin = (userData) => {
     console.log(userData);
+  };
+
+  const handleSearch = async (topic) => {
+    try {
+      setArticles([]);
+      setLoading(true);
+      setError(false);
+
+      const data = await fetchArticlesWithTopic(topic);
+
+      setArticles(data);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -158,6 +209,16 @@ function App() {
       <LoginForm onLogin={handleLogin}></LoginForm>
 
       <FeedbackForm></FeedbackForm>
+
+      <div>
+        <h1>Latest articles</h1>
+
+        <SearchForm onSearch={handleSearch}></SearchForm>
+        {loading && <Loader />}
+        {error && <Error />}
+
+        {articles.length > 0 && <Articles articles={articles} />}
+      </div>
     </>
   );
 }

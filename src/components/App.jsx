@@ -17,6 +17,8 @@ import Articles from "./Articles";
 import SearchForm from "./SearchForm";
 import Error from "./Error";
 import Loader from "./Loader";
+import Ref from "./Ref";
+import Player from "./Player";
 
 const favouriteBooks = [
   { id: "id-1", name: "JS for beginners" },
@@ -219,6 +221,9 @@ function App() {
 
         {articles.length > 0 && <Articles articles={articles} />}
       </div>
+
+      <Ref></Ref>
+      <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />
     </>
   );
 }

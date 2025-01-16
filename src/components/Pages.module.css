@@ -1,0 +1,16 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.active {
+  color: magenta;
+
+  padding-bottom: 5px;
+  border-bottom: 1px solid magenta;
+}

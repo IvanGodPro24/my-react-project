@@ -20,6 +20,19 @@ import Loader from "./Loader";
 import Ref from "./Ref";
 import Player from "./Player";
 
+import { Route, Routes, NavLink } from "react-router-dom";
+import clsx from "clsx";
+import css from "./Pages.module.css";
+import Home from "../pages/Home";
+import About from "../pages/About";
+import Products from "../pages/Products";
+import NotFound from "../pages/NotFound";
+import ProductDetails from "../pages/ProductDetails";
+
+const buildLinkClass = ({ isActive }) => {
+  return clsx(css.link, isActive && css.active);
+};
+
 const favouriteBooks = [
   { id: "id-1", name: "JS for beginners" },
   { id: "id-2", name: "React basics" },
@@ -224,6 +237,31 @@ function App() {
 
       <Ref></Ref>
       <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />
+
+      <div>
+        <nav className={css.nav}>
+          <NavLink to="/" className={buildLinkClass}>
+            Home
+          </NavLink>
+          <NavLink to="/about" className={buildLinkClass}>
+            About
+          </NavLink>
+          <NavLink to="/products" className={buildLinkClass}>
+            Products
+          </NavLink>
+          <NavLink to="/not-found" className={buildLinkClass}>
+            Not Found
+          </NavLink>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:productId" element={<ProductDetails />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
     </>
   );
 }

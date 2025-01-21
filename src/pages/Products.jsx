@@ -12,21 +12,32 @@ const Products = () => {
     product.name.toLowerCase().includes(productName.toLowerCase())
   );
 
-  const updateSearchParams = (key, value) => {
-    const updateParams = new URLSearchParams();
+  // const updateSearchParams = (key, value) => {
+  //   const updateParams = new URLSearchParams();
 
-    if (value !== "") {
-      updateParams.set(key, value);
-    } else {
-      updateParams.delete(key)
-    }
+  //   if (value !== "") {
+  //     updateParams.set(key, value);
+  //   } else {
+  //     updateParams.delete(key);
+  //   }
 
-    setSearchParams(updateParams);
+  //   setSearchParams(updateParams);
+  // };
+
+  const updateQueryString = (name) => {
+    const nextParams = name !== "" ? { name } : {};
+    setSearchParams(nextParams);
   };
 
   return (
     <main>
-      <SearchBox value={productName} onChange={(value) => updateSearchParams('name', value)} />
+      <SearchBox value={productName} onChange={updateQueryString} />
+
+      {/* <SearchBox
+        value={productName}
+        onChange={(value) => updateSearchParams("name", value)}
+      /> */}
+
       <ProductList products={visibleProducts} />
     </main>
   );

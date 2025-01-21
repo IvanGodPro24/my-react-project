@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { fetchArticlesWithTopic } from "./articles-api";
 import reactLogo from "../assets/react.svg";
 import viteLogo from "/vite.svg";
@@ -23,14 +23,16 @@ import Player from "./Player";
 import { Route, Routes, NavLink } from "react-router-dom";
 import clsx from "clsx";
 import css from "./Pages.module.css";
-import Home from "../pages/Home";
-import About from "../pages/About";
-import Products from "../pages/Products";
+
+const Home = lazy(() => import("../pages/Home"));
+const About = lazy(() => import("../pages/About"));
+const Products = lazy(() => import("../pages/Products"));
+const ProductDetails = lazy(() => import("../pages/ProductDetails"));
+const Mission = lazy(() => import("./Mission"));
+const Team = lazy(() => import("./Team"));
+const Reviews = lazy(() => import("./Reviews"));
+
 import NotFound from "../pages/NotFound";
-import ProductDetails from "../pages/ProductDetails";
-import Mission from "./Mission";
-import Team from "./Team";
-import Reviews from "./Reviews";
 
 const buildLinkClass = ({ isActive }) => {
   return clsx(css.link, isActive && css.active);
@@ -257,17 +259,19 @@ function App() {
           </NavLink>
         </nav>
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />}>
-            <Route path="mission" element={<Mission />} />
-            <Route path="team" element={<Team />} />
-            <Route path="reviews" element={<Reviews />} />
-          </Route>
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:productId" element={<ProductDetails />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<div>Loading page...</div>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />}>
+              <Route path="mission" element={<Mission />} />
+              <Route path="team" element={<Team />} />
+              <Route path="reviews" element={<Reviews />} />
+            </Route>
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:productId" element={<ProductDetails />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </div>
     </>
   );

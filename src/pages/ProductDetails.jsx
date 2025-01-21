@@ -1,4 +1,5 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import { BackLink } from "../components/BackLink";
 import { getProductById } from "../fakeApi";
 
 const ProductDetails = () => {
@@ -6,9 +7,12 @@ const ProductDetails = () => {
   console.log(productId);
   const product = getProductById(productId);
 
+  const location = useLocation();
+  const backLinkHref = location.state ?? "/products";
+
   return (
     <main>
-      <img src="https://via.placeholder.com/960x240" alt="" />
+      <BackLink to={backLinkHref}>Back to products</BackLink>
       <div>
         <h2>
           Product - {product.name} - {productId}
